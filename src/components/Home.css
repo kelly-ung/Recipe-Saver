@@ -1,0 +1,32 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    margin: 0;
+}
+
+.home-title {
+    margin-top: 15%;
+    text-align: center;
+    color: rgb(23, 23, 23);
+    font-size: 3.5rem;
+    letter-spacing: 1px;
+}
+
+.space-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.home-buttons {
+    margin-top: 15px;
+    font-size: 1rem; 
+    padding: 1rem;
+    width: 200px;
+}
+
+.description {
+    color: rgb(23, 23, 23);
+}
