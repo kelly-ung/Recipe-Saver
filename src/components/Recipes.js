@@ -4,6 +4,7 @@ import {v4 as uuid} from 'uuid';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import DOMPurify from 'dompurify';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default function Recipes({ recipes, setRecipes, starred, setStarred }) {
     const [name, setName] = useState('');
@@ -70,14 +71,16 @@ export default function Recipes({ recipes, setRecipes, starred, setStarred }) {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            setImage(reader.result);
-            console.log(reader.result)
-          };
-          reader.readAsDataURL(file);
-        }
+        if (!file) return;
+
+        const storage = getStorage();
+        const fileRef = ref(storage, `images/${file.name}`);
+
+        uploadBytes(fileRef, file).then(function(snapshot) {
+            getDownloadURL(snapshot.ref).then((downloadURL) => {
+                setImage(downloadURL); 
+            });
+        });
     };
 
     const handleStarred = useCallback((recipe) => {
