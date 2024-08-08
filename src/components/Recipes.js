@@ -1,5 +1,5 @@
 import './Recipes.css';
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import {v4 as uuid} from 'uuid';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -80,7 +80,7 @@ export default function Recipes({ recipes, setRecipes, starred, setStarred }) {
         }
     };
 
-    const handleStarred = (recipe) => {
+    const handleStarred = useCallback((recipe) => {
         let toStar = !recipe.star; 
 
         if (toStar) {
@@ -102,7 +102,7 @@ export default function Recipes({ recipes, setRecipes, starred, setStarred }) {
 
         const starredRecipes = recipes.filter(recipe => recipe.star);
         setStarred(starredRecipes);
-    };
+    },[]);
 
     useEffect(() => {
         const starredRecipes = recipes.filter(recipe => recipe.star);
