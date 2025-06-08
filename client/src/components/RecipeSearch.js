@@ -1,6 +1,7 @@
 import './RecipeSearch.css';
 import React, { useState, useEffect } from 'react';
 import {v4 as uuid} from 'uuid';
+import axios from 'axios';
 
 export default function RecipeSearch({ recipes, setRecipes }) {
     const [query, setQuery] = useState('');
@@ -20,13 +21,18 @@ export default function RecipeSearch({ recipes, setRecipes }) {
         }
     }, [showPopup]);
 
-    const searchRecipes = async () => {
-        const url = `https://api.edamam.com/search?q=${query}&app_id=${app_id}&app_key=${app_key}`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setRecipeResults(data.hits);
-        setHasSearched(true);
-    };
+    const searchRecipes = () => {
+        axios.get('http://localhost:5001/api', { params: { search: query } })
+        .then(function (response) {
+            const data = response.data;
+            console.log(data);
+            setRecipeResults(data);
+            setHasSearched(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
 
     const handleSearch = (e) => {
         e.preventDefault();
