@@ -8,7 +8,7 @@ require('dotenv').config(); // Load environment variables from .env file
 const app_id = process.env.REACT_APP_API_ID;
 const app_key = process.env.REACT_APP_API_KEY;
 
-app.get("/api", async (req, res) => {
+app.get("/", async (req, res) => {
     const query = req.query.search
     const url = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${app_id}&app_key=${app_key}`;
 
@@ -26,7 +26,7 @@ app.get("/api", async (req, res) => {
     }
 });
 
-app.listen(5001, () => {
-    console.log(`Server is running.`);
+const port = process.env.PORT || 5001;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
-

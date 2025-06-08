@@ -22,7 +22,7 @@ export default function RecipeSearch({ recipes, setRecipes }) {
     }, [showPopup]);
 
     const searchRecipes = () => {
-        axios.get('http://localhost:5001/api', { params: { search: query } })
+        axios.get('https://recipe-saver-server.vercel.app/', { params: { search: query } })
         .then(function (response) {
             const data = response.data;
             console.log(data);
